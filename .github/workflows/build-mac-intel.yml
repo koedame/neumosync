@@ -1,0 +1,38 @@
+name: 'build-mac-intel'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-mac-intel:
+    # intel cpuはmacos-13まで
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.1.10
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: install frontend dependencies
+        run: bun install
+
+      - name: build tauri app
+        run: bun run tauri build
+
+      # result
+      # src-tauri/target/release/bundle/dmg/tauri-app_0.0.0_x64.dmg
+      # src-tauri/target/release/bundle/macos/tauri-app.app
+      - name: upload tauri app build
+        uses: actions/upload-artifact@v4
+        with:
+          name: tauri-app-build
+          path: src-tauri/target/release/bundle/*

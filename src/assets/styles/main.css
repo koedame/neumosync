@@ -1,0 +1,57 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+  .range-input-gray {
+    @apply w-full h-2 rounded-lg appearance-none cursor-pointer nm-inset-gray-200-sm;
+  }
+
+  .range-input-gray::-webkit-slider-runnable-track {
+    height: 2px;
+    border-radius: 5px;
+  }
+
+  .range-input-gray::-webkit-slider-thumb {
+    @apply nm-concave-gray-100-sm;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    -webkit-appearance: none;
+    margin-top: -7px;
+  }
+
+  .range-input-gray::-moz-range-thumb {
+    @apply nm-concave-gray-100-sm;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+  }
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+}
+
+select {
+  -webkit-appearance: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+body {
+  user-select: none; /* 標準の設定 */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
