@@ -23,3 +23,28 @@ Take your musical experience to the next level with NeumoSync.
 - Customizable time signatures
 - Beautiful Neumorphism design
 - User-friendly interface
+
+## Development Setup
+
+### Prerequisites
+
+You need to install the following tools beforehand:
+
+- [Bun](https://bun.sh/)
+- [Rust](https://www.rust-lang.org/)
+
+### Installation
+
+1. Clone the repository
+
+2. Install dependencies
+
+```bash
+$ bun install
+```
+
+3. Run the app
+
+```bash
+$ bun run tauri dev
+```
