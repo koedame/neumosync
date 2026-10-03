@@ -48,3 +48,7 @@ $ bun install
 ```bash
 $ bun run tauri dev
 ```
+
+## ライセンス
+
+[MIT](./LICENSE)
