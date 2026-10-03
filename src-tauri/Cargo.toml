@@ -3,6 +3,7 @@ name = "neumosync"
 version = "1.0.0"
 description = "NeumoSync is a cutting-edge metronome app featuring beautiful Neumorphism design."
 authors = ["koedame"]
+license = "MIT"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
