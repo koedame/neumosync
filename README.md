@@ -13,7 +13,7 @@ Key features include:
 - **Accurate Timing**: High-precision rhythm synchronization enhances your practice and performance.
 - **Customizable Tempo**: Set the BPM (beats per minute) freely to suit various music genres.
 - **Visual Design**: Enjoy using the app with its visually appealing Neumorphism-style UI.
-- **Versatile Functions**: Equipped with multiple time signature settings and sound options to expand your practice scope.
+- **Versatile Functions**: Set the number of beats per measure, and adjust the volume of the accent, quarter, eighth, triplet and sixteenth notes separately. The pitch changes with the type of beat.
 
 Take your musical experience to the next level with NeumoSync.
 
