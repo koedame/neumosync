@@ -1,0 +1,61 @@
+name: Audit
+
+# Dependencies are checked against the RustSec and npm advisory databases. A new
+# advisory can appear without any change to this repository, so besides pull
+# requests that touch a lock file and pushes, this runs every week; a failing
+# scheduled run is how a freshly published advisory reaches us.
+#
+# This checks the lock files themselves. Dependabot alerts only cover what
+# GitHub's dependency graph picked up, so zero alerts is not proof of zero
+# advisories.
+
+on:
+  pull_request:
+    paths:
+      - "src-tauri/Cargo.lock"
+      - "bun.lockb"
+      - "package.json"
+      - ".github/workflows/audit.yml"
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cargo-audit:
+    name: cargo advisories
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: taiki-e/install-action@ab6895351a88b908e96a4697860d4ffea5e57dbe # v2.87.27
+        with:
+          tool: cargo-audit
+
+      # Fails on vulnerabilities only. Unmaintained and yanked crates are
+      # reported as warnings and do not fail the run.
+      - name: Audit Cargo.lock
+        run: cargo audit --file src-tauri/Cargo.lock
+
+  bun-audit:
+    name: bun advisories
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+
+      # Everything, including dev dependencies: they run on the machines of
+      # whoever builds this app.
+      #
+      # GHSA-vfj7-8cjw-p6xm (braces, via tailwindcss > chokidar): 3.0.3 is the
+      # latest release and no fixed version is published. It is only reached
+      # from the CSS build toolchain, never from the shipped app.
+      - name: Audit all dependencies
+        run: bun audit --audit-level=high --ignore GHSA-vfj7-8cjw-p6xm

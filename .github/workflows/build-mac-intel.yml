@@ -6,13 +6,13 @@ on:
 jobs:
   build-mac-intel:
     # intel cpuはmacos-13まで
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v4
 
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.1.10
+          bun-version: 1.4.3
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
