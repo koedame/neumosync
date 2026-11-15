@@ -3,6 +3,9 @@ name: 'build-windows'
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-windows:
     runs-on: windows-latest
