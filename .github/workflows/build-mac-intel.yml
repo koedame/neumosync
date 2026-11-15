@@ -3,6 +3,9 @@ name: 'build-mac-intel'
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-mac-intel:
     # intel cpuはmacos-13まで

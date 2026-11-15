@@ -3,6 +3,9 @@ name: 'build-mac-arm'
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-mac-arm:
     runs-on: macos-15
