@@ -1,54 +1,79 @@
+<div align="center">
+
+<img src="icon.png" alt="NeumoSync のアプリアイコン" width="96" height="96">
+
 # NeumoSync
 
-<img src="./icon.png" width="100px">
+**やわらかい Neumorphism の画面で、拍の種類ごとに音量を分けられるメトロノーム。**
 
-**NeumoSync - スタイリッシュで正確なメトロノームアプリ**
+<img alt="NeumoSync の画面。テンポと拍数の入力欄、6 本の音量スライダー、大きな丸い再生ボタン" src="docs/images/hero.png">
 
-<img src="./screenshot.png" width="500px">
+[![Audit](https://github.com/koedame/neumosync/actions/workflows/audit.yml/badge.svg)](https://github.com/koedame/neumosync/actions/workflows/audit.yml)
+[![CodeQL](https://github.com/koedame/neumosync/actions/workflows/codeql.yml/badge.svg)](https://github.com/koedame/neumosync/actions/workflows/codeql.yml)
+![License: MIT](https://img.shields.io/badge/license-MIT-5b6477)
+![Tauri 2](https://img.shields.io/badge/Tauri-2-5b6477)
 
-NeumoSyncは、美しいNeumorphismデザインを採用した最新のメトロノームアプリです。シンプルで直感的なインターフェースで、初心者からプロのミュージシャンまで、誰でも簡単に使えます。
+[English](README.md) | [日本語](README.ja.md)
 
-以下の特徴を備えています：
+[特徴](#特徴) · [ダウンロード](#ダウンロード) · [ソースからビルド](#ソースからビルド) · [使い方](#使い方)
 
-- **正確なタイミング**：高精度なリズム同期で、練習や演奏のパフォーマンスを向上させます。
-- **カスタマイズ可能なテンポ**：BPM（ビート毎分）を自由に設定でき、様々な音楽ジャンルに対応します。
-- **視覚的なデザイン**：Neumorphismスタイルの美しいUIで、見た目も楽しく使えます。
-- **多機能**：1小節の拍数を設定でき、アクセント・4分・8分・3連・16分の音量を個別に調整できます。拍の種類によって音程が変わります。
+</div>
 
-NeumoSyncで、あなたの音楽体験を次のレベルへ引き上げましょう。
+NeumoSync は練習用のデスクトップのメトロノームです。テンポと 1 小節の拍数を決めたら、クリックの鳴らし方を調整できます。アクセント・4 分・8 分・16 分・3 連の音量をそれぞれ別のスライダーで決められるので、基本の拍の下で、ある拍の刻みだけを小さく鳴らして練習できます。
 
 ## 特徴
 
-- 正確なテンポ設定
-- カスタマイズ可能な拍子
-- 美しいNeumorphismデザイン
-- 使いやすいインターフェース
+- **6 本の音量スライダー。** マスター・アクセント・4 分・8 分・16 分・3 連を個別に調整できます。
+- **30〜300 BPM。** 入力欄にテンポを入力します。
+- **1 小節 1〜300 拍。** アクセントは各小節の 1 拍目に鳴ります。
+- **4 種類の音程。** アクセントは 880 Hz、4 分と 8 分は 440 Hz、16 分は 220 Hz、3 連は 300 Hz。どの刻みが鳴っているか耳で分かります。
+- **安定したタイミング。** Web Worker の 25 ミリ秒のタイマーが、Web Audio の時計の 100 ミリ秒先までクリックを予約するので、画面の処理で拍がずれません。
 
-## 開発環境のセットアップ
+## ダウンロード
+
+配布用のビルド済みバイナリはまだ公開していません。ソースからビルドしてください（下記）。
+
+## ソースからビルド
+
+NeumoSync は [Tauri 2](https://v2.tauri.app/) のアプリで、画面は Vue 3 です。
 
 ### 事前準備
 
-事前に以下のツールをインストールする必要があります：
-
 - [Bun](https://bun.sh/)
 - [Rust](https://www.rust-lang.org/)
+- お使いの OS の [Tauri v2 の前提条件](https://v2.tauri.app/start/prerequisites/)（Linux では webkit2gtk-4.1・libssl など）
 
-### インストール手順
-
-1. リポジトリをクローン
-
-2. 依存関係をインストール
+### クイックスタート
 
 ```bash
-$ bun install
+git clone https://github.com/koedame/neumosync.git
+cd neumosync
+bun install
+bun run tauri dev
 ```
 
-3. アプリを起動
+インストール用のバンドルを作るときは `bun run tauri build` を実行します。成果物は `src-tauri/target/release/bundle/` に出ます。リポジトリの手動実行のビルド用ワークフローは、macOS（Apple シリコンと Intel）と Windows でこれを実行します。
 
-```bash
-$ bun run tauri dev
-```
+## 使い方
+
+| 操作する場所 | 動き |
+|---|---|
+| テンポの入力欄（4 分音符 =） | 1 分あたりの拍数。30〜300 |
+| 拍数の入力欄（拍子の記号） | 1 小節の拍数。1〜300 |
+| スピーカーのスライダー | 下のすべての音にかかるマスター音量 |
+| 放送マークのスライダー | 各小節の 1 拍目のアクセント |
+| 4 分音符のスライダー | 各拍の音量 |
+| 8 分音符のスライダー | 拍の裏の 8 分音符の音量 |
+| 16 分音符のスライダー | 16 分音符の刻みの音量 |
+| 3 連符のスライダー | 3 連符の刻みの音量 |
+| 丸いボタン | 開始と停止 |
+
+起動直後の音量は、アクセントが 100%、4 分音符が 75%、8 分・16 分・3 連が 0 です。アクセント付きの単純なクリックから始まります。再生中はテンポと拍数の欄を変更できません。
+
+## セキュリティ
+
+脆弱性は [SECURITY.md](SECURITY.md) の手順で報告してください。
 
 ## ライセンス
 
-[MIT](./LICENSE)
+[MIT](LICENSE)

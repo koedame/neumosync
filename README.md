@@ -1,54 +1,79 @@
+<div align="center">
+
+<img src="icon.png" alt="NeumoSync app icon" width="96" height="96">
+
 # NeumoSync
 
-<img src="./icon.png" width="100px">
+**A metronome with a soft Neumorphism interface and separate volumes for every subdivision.**
 
-**Stylish and Accurate Metronome App**
+<img alt="The NeumoSync window: tempo and beat fields, six volume sliders and a large round play button" src="docs/images/hero.png">
 
-<img src="./screenshot.png" width="500px">
+[![Audit](https://github.com/koedame/neumosync/actions/workflows/audit.yml/badge.svg)](https://github.com/koedame/neumosync/actions/workflows/audit.yml)
+[![CodeQL](https://github.com/koedame/neumosync/actions/workflows/codeql.yml/badge.svg)](https://github.com/koedame/neumosync/actions/workflows/codeql.yml)
+![License: MIT](https://img.shields.io/badge/license-MIT-5b6477)
+![Tauri 2](https://img.shields.io/badge/Tauri-2-5b6477)
 
-NeumoSync is a cutting-edge metronome app featuring beautiful Neumorphism design. With a simple and intuitive interface, it is easy to use for everyone from beginners to professional musicians.
+[English](README.md) | [日本語](README.ja.md)
 
-Key features include:
+[Highlights](#highlights) · [Download](#download) · [Build from source](#build-from-source) · [Usage](#usage)
 
-- **Accurate Timing**: High-precision rhythm synchronization enhances your practice and performance.
-- **Customizable Tempo**: Set the BPM (beats per minute) freely to suit various music genres.
-- **Visual Design**: Enjoy using the app with its visually appealing Neumorphism-style UI.
-- **Versatile Functions**: Set the number of beats per measure, and adjust the volume of the accent, quarter, eighth, triplet and sixteenth notes separately. The pitch changes with the type of beat.
+</div>
 
-Take your musical experience to the next level with NeumoSync.
+NeumoSync is a desktop metronome for practice. Set a tempo and the number of beats per measure, then shape the click: the accent, quarter notes, eighth notes, sixteenth notes and triplets each have their own volume slider, so you can drill a subdivision quietly under the main beat.
 
-## Features
+## Highlights
 
-- Accurate tempo setting
-- Customizable time signatures
-- Beautiful Neumorphism design
-- User-friendly interface
+- **Six volume sliders.** Master, accent, quarter, eighth, sixteenth and triplet each get their own level.
+- **30 to 300 BPM.** Type the tempo into the field.
+- **1 to 300 beats per measure.** The accent falls on the first beat of every measure.
+- **Four pitches.** 880 Hz for the accent, 440 Hz for quarter and eighth notes, 220 Hz for sixteenths and 300 Hz for triplets, so you can hear which subdivision is playing.
+- **Steady timing.** Clicks are scheduled on the Web Audio clock, 100 ms ahead, from a 25 ms timer in a Web Worker, so the interface never delays a beat.
 
-## Development Setup
+## Download
+
+No prebuilt binaries are published yet. Build from source (see below).
+
+## Build from source
+
+NeumoSync is a [Tauri 2](https://v2.tauri.app/) app with a Vue 3 front end.
 
 ### Prerequisites
 
-You need to install the following tools beforehand:
-
 - [Bun](https://bun.sh/)
 - [Rust](https://www.rust-lang.org/)
+- The [Tauri v2 prerequisites](https://v2.tauri.app/start/prerequisites/) for your OS (on Linux: webkit2gtk-4.1, libssl, etc.)
 
-### Installation
-
-1. Clone the repository
-
-2. Install dependencies
+### Quick start
 
 ```bash
-$ bun install
+git clone https://github.com/koedame/neumosync.git
+cd neumosync
+bun install
+bun run tauri dev
 ```
 
-3. Run the app
+To build an installable bundle instead, run `bun run tauri build`. The bundles are written to `src-tauri/target/release/bundle/`. The repository's manual build workflows run this on macOS (Apple silicon and Intel) and on Windows.
 
-```bash
-$ bun run tauri dev
-```
+## Usage
+
+| Control | What it does |
+|---|---|
+| Tempo field (quarter note =) | Beats per minute, 30 to 300 |
+| Beats field (time signature) | Beats per measure, 1 to 300 |
+| Speaker slider | Master volume for everything below |
+| Accent slider (broadcast icon) | Accent on the first beat of each measure |
+| Quarter-note slider | Volume of each beat |
+| Eighth-note slider | Volume of the off-beat eighth notes |
+| Sixteenth-note slider | Volume of the sixteenth-note subdivisions |
+| Triplet slider | Volume of the triplet subdivisions |
+| Round button | Start and stop |
+
+The quarter-note slider starts at 75%, the accent at 100%, and the eighth, sixteenth and triplet sliders at 0, so a fresh start is a plain click with an accent. The tempo and beats fields are locked while the metronome is playing.
+
+## Security
+
+To report a vulnerability, follow [SECURITY.md](SECURITY.md).
 
 ## License
 
-[MIT](./LICENSE)
+[MIT](LICENSE)
